@@ -40,7 +40,7 @@
     }
 
     * {
-      box-sizing: border-box
+      box-sizing: border-box;
     }
 
     html,
@@ -314,18 +314,41 @@
       header.site-header {
         flex-direction: column;
         align-items: flex-start;
+        justify-content: flex-start;
         gap: 6px;
-      }
-
-      .header-actions {
-        margin-left: 0;
+        padding: 8px 12px;
       }
 
       .brand {
+        width: 100%;
+        justify-content: flex-start;
         gap: 8px;
+      }
+
+      .brand h1 {
+        font-size: 1rem;
+        white-space: normal;
+      }
+
+      .brand p {
+        font-size: 0.75rem;
+        white-space: normal;
+      }
+
+      .logo-img {
+        width: 2rem;
+        height: 2rem;
+      }
+
+      .header-actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 0;
       }
     }
   </style>
+
 
 
 
