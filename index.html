@@ -12,377 +12,117 @@
     rel="stylesheet">
   <style>
     /* =====================
-     Variables & Base
-     ===================== */
+       Design tokens (light first)
+       ===================== */
     :root {
-      --bg: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
-      --card: rgba(255, 255, 255, 0.75);
+      --bg: #ffffff;
       --muted: #6b7280;
       --text: #0f172a;
-      --accent1: #6d28d9;
-      --accent2: #06b6d4;
-      --glass-border: rgba(255, 255, 255, 0.6);
-      --shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
-      --radius: 16px;
-      --glass-blur: 12px;
+      --accent: #6d28d9;
+      --accent-2: #06b6d4;
+      --surface: #ffffff;
+      --divider: #e6e9ef;
+      --radius: 10px;
+      --container: 1100px;
+      --shadow-soft: 0 6px 18px rgba(16, 24, 40, 0.06);
+      --glass-border: rgba(15, 23, 42, 0.04);
     }
 
     [data-theme="dark"] {
       --bg: linear-gradient(180deg, #071025 0%, #071229 60%);
-      --card: rgba(10, 13, 20, 0.65);
       --muted: #9aa4b2;
       --text: #e6eef7;
-      --accent1: #7c3aed;
-      --accent2: #06b6d4;
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --shadow: 0 14px 40px rgba(2, 6, 23, 0.7);
-      --glass-blur: 8px;
+      --accent: #8b5cf6;
+      --accent-2: #06b6d4;
+      --surface: rgba(8, 12, 20, 0.6);
+      --divider: rgba(255,255,255,0.06);
+      --shadow-soft: 0 8px 26px rgba(2,6,23,0.6);
+      --glass-border: rgba(255,255,255,0.06);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
-    html,
-    body {
-      height: 100%;
-      scroll-behavior: smooth;
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      transition: background .35s ease, color .35s ease;
-    }
-
-    /* =====================
-     Header
-     ===================== */
+    /* Header */
     header.site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 1000;
-      backdrop-filter: blur(10px) saturate(120%);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
-      border-bottom: 1px solid var(--glass-border);
-      box-shadow: var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 18px;
-      flex-wrap: wrap;
-      transition: background 0.3s ease, padding 0.3s ease;
-      border-radius: 0 0 20px 20px;
+      position: sticky; top: 0; z-index: 1200; display:flex; align-items:center; gap: 16px; padding: 14px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85)); border-bottom: 1px solid var(--divider); box-shadow: var(--shadow-soft);
     }
+    [data-theme="dark"] header.site-header { background: rgba(7,10,21,0.75); }
 
-    [data-theme="dark"] header.site-header {
-      background: linear-gradient(180deg, rgba(7, 10, 21, 0.6), rgba(7, 10, 21, 0.3));
-    }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .logo-img { width:44px; height:44px; border-radius:8px; object-fit:contain; }
+    .brand h1 { margin:0; font-size:1.05rem; letter-spacing: -0.2px; }
+    .brand p { margin:0; font-size:0.78rem; color:var(--muted); }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex: 1;
-      min-width: 0;
-    }
+    .header-actions { margin-left:auto; display:flex; gap:8px; align-items:center; }
+    .theme-toggle { background:transparent; border:1px solid var(--glass-border); padding:8px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; }
+    .theme-toggle svg { width:18px; height:18px; }
 
-    .logo-img {
-      width: 2.5rem;
-      height: 2.5rem;
-      object-fit: contain;
-      border-radius: 8px;
-      transition: transform .2s ease;
-    }
+    /* Layout */
+    .container { max-width: var(--container); margin: 30px auto; padding: 20px; display: grid; grid-template-columns: 240px 1fr; gap: 28px; }
 
-    .logo-img:hover {
-      transform: scale(1.05);
-    }
+    aside.sidebar { position: sticky; top: 84px; align-self:start; padding-right: 10px; }
+    .sidebar nav { background: transparent; border-right: none; }
+    .sidebar ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+    .sidebar a { color:var(--text); text-decoration:none; padding:8px 10px; border-radius:8px; display:block; font-weight:600; font-size:0.95rem; }
+    .sidebar a:hover { background: rgba(109,40,217,0.06); color:var(--accent); transform: translateX(6px); transition: all .18s ease; }
+    .sidebar a.active { background: rgba(109,40,217,0.09); color:var(--accent); }
 
-    .brand h1 {
-      font-size: 1.05rem;
-      line-height: 1.2;
-      margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    section.main { background: transparent; }
 
-    .brand p {
-      font-size: 0.75rem;
-      margin: 0;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    /* Documentation sections (no cards) */
+    .doc-section { padding:22px 22px 10px 22px; background: transparent; border-radius:8px; border-bottom: 1px solid var(--divider); margin-bottom:18px; }
+    .doc-section h2 { margin:0 0 8px 0; font-size:1.15rem; }
+    .doc-section h3 { margin:8px 0 12px 0; color:var(--accent); font-size:1rem; }
+    .doc-section p { color:var(--muted); line-height:1.6; margin:6px 0 12px 0; }
+    .meta-table { width:100%; border-collapse:collapse; margin-top:12px; }
+    .meta-table td { padding:8px 10px; vertical-align:top; }
+    .meta-table tr { border-bottom:1px dashed var(--divider); }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-left: auto;
-    }
+    /* Images used as examples in documentation */
+    .doc-image { display:block; width:100%; max-width:900px; height:auto; margin:12px 0; border-radius:8px; box-shadow: var(--shadow-soft); border:1px solid var(--glass-border); }
+    .image-caption { font-size:0.85rem; color:var(--muted); margin-top:6px; }
 
-    .theme-toggle {
-      background: var(--card);
-      border: 1px solid var(--glass-border);
-      padding: 6px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: inline-grid;
-      place-items: center;
-      width: 36px;
-      height: 36px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
-    }
+    /* Code blocks / inline code styling */
+    pre.code-block { background: linear-gradient(180deg, rgba(245,247,250,1), rgba(240,243,247,1)); padding:12px; border-radius:8px; overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size:0.92rem; border:1px solid var(--divider); }
+    [data-theme="dark"] pre.code-block { background: rgba(10,12,16,0.6); }
+    code.inline { background: rgba(0,0,0,0.03); padding:2px 6px; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; }
 
-    .theme-toggle:active {
-      transform: scale(.95);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+    /* Footer */
+    footer.site-footer { text-align:center; padding:18px 20px; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--divider); margin-top:32px; }
 
-    .theme-toggle svg {
-      width: 18px;
-      height: 18px;
-      stroke: var(--text);
-    }
-
-    /* =====================
-     Layout (Sidebar + Main)
-     ===================== */
-    .container {
-      max-width: 1200px;
-      margin: 100px auto 28px;
-      padding: 0 16px;
-      flex: 1 0 auto;
-      display: grid;
-      grid-template-columns: 260px 1fr;
-      gap: 24px;
-    }
-
-    aside.sidebar {
-      position: sticky;
-      top: 110px;
-      height: max-content;
-      border-right: 2px solid rgba(255, 255, 255, 0.12);
-      padding-right: 1rem;
-      font-size: 15px;
-      backdrop-filter: blur(6px);
-    }
-
-    .sidebar nav ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .sidebar nav a {
-      color: var(--text);
-      text-decoration: none;
-      padding: 8px 10px;
-      border-radius: 12px;
-      transition: background .2s, transform .2s;
-    }
-
-    .sidebar nav a:hover {
-      background: rgba(109, 40, 217, 0.1);
-      transform: translateX(4px);
-    }
-
-    [data-theme="dark"] .sidebar nav a:hover {
-      background: rgba(124, 58, 237, 0.15);
-    }
-
-    section.main {
-      padding-bottom: 2rem;
-    }
-
-    /* =====================
-     Cards + visuals
-     ===================== */
-    .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      padding: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid var(--glass-border);
-      backdrop-filter: blur(var(--glass-blur));
-      margin-top: 1rem;
-      overflow-x: auto;
-      transition: transform .18s ease, box-shadow .18s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 28px rgba(0, 0, 0, 0.12);
-    }
-
-    .chart-card img {
-      border-radius: 12px;
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .mini-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-    }
-
-    .mini-table td {
-      padding: 10px 12px;
-      border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
-      font-size: 14px;
-    }
-
-    [data-theme="dark"] .mini-table td {
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-    }
-
-    footer.site-footer {
-      padding: 18px 16px;
-      border-top: 1px solid var(--glass-border);
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.875rem;
-      backdrop-filter: blur(6px);
-    }
-
-    /* =====================
-     Responsive
-     ===================== */
-    @media(max-width:1024px) {
-      .container {
-        grid-template-columns: 220px 1fr;
-        gap: 16px;
-      }
-
-      .theme-toggle {
-        width: 32px;
-        height: 32px;
-      }
-    }
-
-    @media(max-width:768px) {
-      .container {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      aside.sidebar {
-        position: relative;
-        top: auto;
-        border-right: none;
-        padding: 0;
-        margin-bottom: 1rem;
-      }
-
-      header.site-header {
-        padding: 8px 12px;
-      }
-
-      .theme-toggle {
-        width: 28px;
-        height: 28px;
-      }
-
-      .brand h1 {
-        font-size: 14px;
-      }
-
-      .brand p {
-        font-size: 11px;
-      }
-    }
-
-    @media(max-width:480px) {
-      header.site-header {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-        gap: 6px;
-        padding: 8px 12px;
-      }
-
-      .brand {
-        width: 100%;
-        justify-content: flex-start;
-        gap: 8px;
-      }
-
-      .brand h1 {
-        font-size: 1rem;
-        white-space: normal;
-      }
-
-      .brand p {
-        font-size: 0.75rem;
-        white-space: normal;
-      }
-
-      .logo-img {
-        width: 2rem;
-        height: 2rem;
-      }
-
-      .header-actions {
-        width: 100%;
-        display: flex;
-        justify-content: flex-end;
-        margin-left: 0;
-      }
+    /* Responsive */
+    @media(max-width:900px) {
+      .container { grid-template-columns: 1fr; padding:16px; }
+      aside.sidebar { position:relative; top:auto; }
     }
   </style>
-
-
-
-
 </head>
 
 <body>
   <header class="site-header">
     <div class="brand">
-      <!-- Smaller GSoC logo -->
-      <img src="img/gsoc.png" alt="GSoC Logo" class="logo-img">
+      <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
       <div>
-        <h1>GSoC 2025</h1>
+        <h1>GSoC 2025 — Avro File Analysis</h1>
         <p>@ Data For The Common Good</p>
       </div>
     </div>
 
     <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
-        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <!-- will be replaced by JS -->
         </svg>
       </button>
     </div>
   </header>
 
-
-
-  <main class="container">
-    <!-- Sidebar Navigation -->
-    <aside class="sidebar">
+  <main class="container" id="mainContainer">
+    <aside class="sidebar" aria-label="Documentation navigation">
       <nav>
         <ul>
-          <li><a href="#details">Project Information</a></li>
+          <li><a href="#details" class="active">Project Information</a></li>
           <li><a href="#overview">Overview</a></li>
           <li><a href="#workflow">Workflow</a></li>
           <li><a href="#distribution">Percentage Distribution</a></li>
@@ -392,18 +132,18 @@
       </nav>
     </aside>
 
-    <!-- Main Content -->
-    <section class="main">
-      <article id="details">
+    <section class="main" id="content">
+
+      <article id="details" class="doc-section">
         <h2>Project Information</h2>
-        <table class="mini-table">
+        <table class="meta-table">
           <tr>
-            <td><strong>Name</strong></td>
-            <td><a>Tushar Jamdade</a></td>
+            <td style="width:130px"><strong>Name</strong></td>
+            <td>Tushar Jamdade</td>
           </tr>
           <tr>
             <td><strong>Organization</strong></td>
-            <td><a href="https://commons.cri.uchicago.edu/">Data for the Common Good (D4CG)</a></td>
+            <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good (D4CG)</a></td>
           </tr>
           <tr>
             <td><strong>Mentor</strong></td>
@@ -411,7 +151,7 @@
           </tr>
           <tr>
             <td><strong>Project Repo</strong></td>
-            <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook">pcdc-analysis-notebook</a></td>
+            <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank" rel="noopener">pcdc-analysis-notebook</a></td>
           </tr>
           <tr>
             <td><strong>Technologies</strong></td>
@@ -424,90 +164,82 @@
         </table>
       </article>
 
-      <article id="overview">
+      <article id="overview" class="doc-section">
         <h2>Overview</h2>
         <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
         <p>
           This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical datasets stored in
           AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark (via
-          sparklyr) to efficiently read and process large-scale AVRO inputs, handling files with 40,000+ nested records,
-          and flattens complex hierarchical structures into structured tabular formats for downstream analysis.
+          sparklyr) to read and process large AVRO inputs and flattens complex hierarchical structures into tidy
+          tabular formats for downstream analysis.
         </p>
+
         <p>
-          Users can explore different entity types and observation nodes, generate percentage distributions, and perform
-          survival analyses such as Kaplan–Meier overall and event-free survival curves. A configurable
-          <strong>Table-1</strong> feature allows selection of covariates, specification of variable types, and
-          inclusion/exclusion of variables, while also supporting statistical p-value computation when grouping is
-          applied.
+          Users can explore entities and observation nodes, generate percentage distributions, and perform survival
+          analyses (Kaplan–Meier). A configurable Table-1 feature allows selection of covariates and statistical
+          comparisons when grouping is applied. Outputs (Excel, PNG) are download-ready for reporting.
         </p>
-        <p>
-          Grouping can be performed by uploading subject ID files (CSV, Excel, or text). Two groups are then created:
-          one matching the IDs and the other comprising the remaining subjects. If no grouping file is provided, Table-1
-          is generated for the full dataset. The application further allows iterative re-grouping, clearing of results,
-          and re-analysis with new inputs. Outputs including summary tables (Excel) and visualizations (PNG) can be
-          downloaded directly for reporting.
-        </p>
-        <p>
-          Encapsulation within Docker ensures reproducibility, consistency, and portability across environments, while
-          integration with Apache Spark enables scalable processing of large biomedical datasets. Additionally, the
-          application can be deployed on AWS (EC2, ECS, or Fargate) to provide secure, scalable, and remote access for
-          research teams.
-        </p>
+
+        <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
+        <div class="image-caption">Example: nested AVRO structure before flattening.</div>
       </article>
 
-      <article id="workflow">
+      <article id="workflow" class="doc-section">
         <h2>Workflow</h2>
         <p>
-          From the UI, users upload the AVRO file in the PFB (Portable Format for Biomedical data). If the file is
-          valid, all entities are displayed. Core entities such as <em>person, subject, timing,
-            survival_characteristics</em> are automatically included for survival analyses. Optionally, users can
-          include custom entities. Data is merged with relationships preserved, enabling downstream operations.
+          Users upload a PFB AVRO file. Valid files expose available entities. Core entities such as
+          <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>, and
+          <code class="inline">survival_characteristics</code> are included by default for survival analyses. Additional
+          entities may be selected by the user.
         </p>
-      </article>
 
-      <article id="distribution">
-        <h2>Percentage Distribution</h2>
         <p>
-          Users can select categorical variables to compute percentage distributions, gaining quick insights. Results
-          are exportable as Excel or PNG files.
+          The application flattens nested records into a tidy table, preserves relationships, and merges entity-level
+          information for analyses like distribution counts and survival curves.
         </p>
-        <div class="chart-card card"><img src="img/image1.png" alt="Percentage Distribution Example" width="100%">
-        </div>
+
+        <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
+        <div class="image-caption">After flattening, AVRO data is converted to a tabular form suitable for analysis.</div>
       </article>
 
-      <article id="survival">
+      <article id="distribution" class="doc-section">
+        <h2>Percentage Distribution</h2>
+        <p>Select categorical variables to compute percentage distributions and download results as Excel or PNG.</p>
+
+        <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
+        <div class="image-caption">Distribution visualization (exportable).</div>
+      </article>
+
+      <article id="survival" class="doc-section">
         <h2>Survival Curves</h2>
         <h3>Overall Survival</h3>
         <p>
-          Calculated using initial diagnosis dates and last-known survival status from
-          <code>survival_characteristics</code>. The Kaplan–Meier estimator is used to plot survival rates.
+          Overall survival uses diagnosis and last-known outcome from <code class="inline">survival_characteristics</code>.
+          Kaplan–Meier estimators are used to generate survival plots and downloadable PNGs with risk tables.
         </p>
-        <div class="chart-card card"><img src="img/image2.png" alt="Overall Survival Curve" width="100%"></div>
+
+        <img src="img/image2.png" alt="Overall survival" class="doc-image">
 
         <h3>Event-Free Survival</h3>
         <p>
-          Event-free survival is computed using censoring information from <code>subject + timing</code>. If a patient
-          is censored, the curve reflects the drop accordingly.
+          Event-free survival uses censoring and event timing information (from <code class="inline">subject</code> and
+          <code class="inline">timing</code>) to compute curves.
         </p>
-        <div class="chart-card card"><img src="img/image3.png" alt="Event-Free Survival Curve" width="100%"></div>
+        <img src="img/image3.png" alt="Event-free survival" class="doc-image">
       </article>
 
-      <article id="table1">
+      <article id="table1" class="doc-section">
         <h2>Table-1 Analysis</h2>
         <p>
-          Users can select covariates, specify variable types, and generate summary tables. Numeric variables include
-          mean, median, and missing percentages, while categorical variables show counts and percentages. Results are
-          interactive: rows per page can be adjusted, and search functionality is supported.
+          Select covariates and variable types to create summary tables. Numeric variables show mean/median/missing %;
+          categorical variables show counts and percentages. When a subject ID grouping file is uploaded, two groups are
+          produced (IDs in file vs remaining subjects) and p-values are computed where appropriate.
         </p>
-        <div class="chart-card card"><img src="img/image4.png" alt="Table 1 Output Example" width="100%"></div>
-        <div class="chart-card card"><img src="img/image5.png" alt="Interactive Table Example" width="100%"></div>
-        <p>
-          Grouping is enabled by uploading subject IDs. IDs in the file form <strong>Group 1</strong>, while remaining
-          subjects form <strong>Group 2</strong>. P-values are computed for statistical comparisons. Users can clear
-          results, re-upload new IDs, and repeat analyses. Final outputs can be downloaded as Excel files.
-        </p>
-        <div class="chart-card card"><img src="img/image6.png" alt="Grouped Table 1 Example" width="100%"></div>
+
+        <img src="img/image4.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (example).</div>
       </article>
+
     </section>
   </main>
 
@@ -516,24 +248,53 @@
   </footer>
 
   <script>
-    // Keep dark theme only
+    // Default theme: light. User can toggle to dark.
     (function () {
       const root = document.documentElement;
       const toggle = document.getElementById('themeToggle');
       const icon = document.getElementById('themeIcon');
-      let theme = 'dark';
+
+      let theme = 'light'; // light default as requested
       root.setAttribute('data-theme', theme);
 
-      function updateIcon(t) {
-        icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>'; // moon icon
+      function setIcon(t) {
+        if (t === 'dark') {
+          // moon icon
+          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+          return;
+        }
+        // sun icon
+        icon.innerHTML = '<circle cx="12" cy="12" r="3"></circle>\n          <path d="M12 2v2"></path>\n          <path d="M12 20v2"></path>\n          <path d="M4.2 4.2l1.4 1.4"></path>\n          <path d="M18.4 18.4l1.4 1.4"></path>\n          <path d="M2 12h2"></path>\n          <path d="M20 12h2"></path>\n          <path d="M4.2 19.8l1.4-1.4"></path>\n          <path d="M18.4 5.6l1.4-1.4"></path>';
       }
-      updateIcon(theme);
+
+      setIcon(theme);
 
       toggle.addEventListener('click', () => {
         theme = (theme === 'dark') ? 'light' : 'dark';
         root.setAttribute('data-theme', theme);
-        updateIcon(theme);
+        setIcon(theme);
       });
+
+      // Small helper: mark active nav link based on hash or first link
+      const links = document.querySelectorAll('.sidebar a');
+      function setActiveFromHash() {
+        const hash = location.hash || '#details';
+        links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+      }
+      window.addEventListener('hashchange', setActiveFromHash);
+      setActiveFromHash();
+
+      // Smooth scroll for internal links (improve UX on smaller screens)
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', this.getAttribute('href'));
+          setActiveFromHash();
+        });
+      });
+
     })();
   </script>
 </body>
