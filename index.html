@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Avro File Analysis — GSoC 2025 End Evaluation</title>
+  <title>Tushar Jamdade — GSoC 2025 — Avro File Analysis</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -16,294 +16,108 @@
        Design tokens (light first)
        ===================== */
     :root {
-      --bg: #f9fafb;
+      --bg: #f7f8fb;
+      --bg-accent: linear-gradient(180deg,#f7f8fb 0%, #eef2ff 100%);
       --muted: #6b7280;
       --text: #0f172a;
       --accent: #6d28d9;
       --accent-2: #06b6d4;
       --surface: #ffffff;
-      --divider: #e5e7eb;
+      --divider: #e6e9ef;
       --radius: 12px;
       --container: 1100px;
       --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.06);
-      --glass-border: rgba(15, 23, 42, 0.05);
+      --glass-border: rgba(15, 23, 42, 0.06);
+      --transition-fast: 180ms cubic-bezier(.2,.9,.2,1);
     }
 
     [data-theme="dark"] {
-      --bg: linear-gradient(180deg, #050b18 0%, #0b1222 70%);
+      --bg: linear-gradient(180deg,#050812 0%, #061027 70%);
+      --bg-accent: linear-gradient(180deg,#050812 0%, #081227 70%);
       --muted: #9aa4b2;
       --text: #e6eef7;
       --accent: #8b5cf6;
       --accent-2: #06b6d4;
-      --surface: rgba(15, 23, 42, 0.7);
-      --divider: rgba(255, 255, 255, 0.08);
-      --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.6);
-      --glass-border: rgba(255, 255, 255, 0.08);
+      --surface: rgba(10, 14, 20, 0.65);
+      --divider: rgba(255,255,255,0.06);
+      --shadow-soft: 0 10px 28px rgba(0,0,0,0.6);
+      --glass-border: rgba(255,255,255,0.06);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      height: 100%;
-      margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
-      background: var(--bg);
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      line-height: 1.6;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.6; transition: background var(--transition-fast), color var(--transition-fast); }
 
     /* Header */
     header.site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1200;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 24px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1200;
+      display: flex; align-items: center; gap: 16px;
+      padding: 12px 20px; backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.85));
       border-bottom: 1px solid var(--divider);
       box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(10px);
+      transition: background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
     }
 
     [data-theme="dark"] header.site-header {
-      background: rgba(15, 20, 35, 0.72);
-      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(6,10,20,0.6), rgba(6,10,20,0.55));
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      box-shadow: var(--shadow-soft);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
+    .brand { display:flex; align-items:center; gap:14px; }
+    .logo-img { width:46px; height:46px; border-radius:10px; object-fit:cover; box-shadow: 0 6px 18px rgba(13, 18, 36, 0.06); border: 1px solid var(--glass-border); }
+    .brand h1 { margin:0; font-size:1.05rem; font-weight:700; letter-spacing:-0.3px; }
+    .brand p { margin:0; font-size:0.78rem; color:var(--muted); }
 
-    .logo-img {
-      width: 46px;
-      height: 46px;
-      border-radius: 10px;
-      object-fit: contain;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    .brand p {
-      margin: 0;
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .header-actions {
-      margin-left: auto;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
+    .header-actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
 
     .theme-toggle {
-      background: var(--surface);
-      border: 1px solid var(--glass-border);
-      padding: 8px;
-      border-radius: 10px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-soft);
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:8px; gap:8px; border-radius:10px; cursor:pointer; border:1px solid var(--glass-border);
+      background: var(--surface); color: var(--text); box-shadow: 0 6px 18px rgba(13,18,36,0.04);
+      transition: transform 200ms ease, background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      width:44px; height:44px;
     }
 
-    .theme-toggle:hover {
-      transform: scale(1.05);
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+    .theme-toggle:hover { transform: translateY(-2px); }
+    .theme-toggle:active { transform: translateY(0); }
+    .theme-toggle:focus { outline: 3px solid rgba(99, 102, 241, 0.16); outline-offset: 2px; }
 
-    .theme-toggle svg {
-      width: 20px;
-      height: 20px;
-    }
+    /* ensure svg icons adopt button color */
+    .theme-toggle svg { width:22px; height:22px; display:block; stroke: currentColor; fill: none; stroke-width:1.6; transition: transform 240ms var(--transition-fast), opacity 180ms ease; }
+    .theme-toggle .icon-fill { fill: currentColor; stroke: none; }
 
     /* Layout */
-    .container {
-      max-width: var(--container);
-      margin: 0 auto;
-      padding: 110px 22px 32px;
-      display: grid;
-      grid-template-columns: 240px 1fr;
-      gap: 30px;
-    }
+    .container { max-width: var(--container); margin:0 auto; padding: 110px 22px 32px; display:grid; grid-template-columns: 240px 1fr; gap:30px; }
+    aside.sidebar { position: sticky; top: 110px; align-self:start; padding-right: 14px; }
+    .sidebar ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+    .sidebar a { color: var(--text); text-decoration:none; padding:10px 14px; border-radius:12px; display:block; font-weight:600; font-size:0.95rem; transition: all 0.18s ease; }
+    .sidebar a:hover { background: rgba(109,40,217,0.06); color: var(--accent); transform: translateX(6px); }
+    .sidebar a.active { background: rgba(109,40,217,0.1); color: var(--accent); }
 
-    aside.sidebar {
-      position: sticky;
-      top: 110px;
-      align-self: start;
-      padding-right: 14px;
-    }
+    section.main { background: transparent; }
 
-    .sidebar nav {
-      background: transparent;
-    }
+    .doc-section { padding:28px 26px 18px; background: var(--surface); border-radius: var(--radius); border:1px solid var(--divider); box-shadow: var(--shadow-soft); margin-bottom:24px; transition: background var(--transition-fast), border-color var(--transition-fast); }
+    .doc-section h2 { margin:0 0 10px 0; font-size:1.25rem; font-weight:700; }
+    .doc-section h3 { margin:10px 0 14px 0; color:var(--accent); font-size:1rem; font-weight:600; }
+    .doc-section p { color:var(--muted); margin:6px 0 14px 0; }
 
-    .sidebar ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .meta-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:0.93rem; }
+    .meta-table td { padding:8px 10px; vertical-align:top; }
+    .meta-table tr { border-bottom: 1px dashed var(--divider); }
 
-    .sidebar a {
-      color: var(--text);
-      text-decoration: none;
-      padding: 10px 14px;
-      border-radius: var(--radius);
-      display: block;
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.2s ease;
-    }
+    .doc-image { display:block; width:100%; max-width:880px; height:auto; margin:14px 0; border-radius: var(--radius); box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border); }
+    .image-caption { font-size:0.82rem; color:var(--muted); margin-top:6px; text-align:center; }
 
-    .sidebar a:hover {
-      background: rgba(109, 40, 217, 0.08);
-      color: var(--accent);
-      transform: translateX(5px);
-    }
+    pre.code-block { background: linear-gradient(180deg, rgba(245,247,250,1), rgba(240,243,247,1)); padding:14px; border-radius:var(--radius); overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size:0.92rem; border:1px solid var(--divider); }
+    code.inline { background: rgba(0,0,0,0.05); padding:2px 6px; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; }
 
-    .sidebar a.active {
-      background: rgba(109, 40, 217, 0.12);
-      color: var(--accent);
-    }
-
-    section.main {
-      background: transparent;
-    }
-
-    /* Documentation sections */
-    .doc-section {
-      padding: 28px 26px 18px;
-      background: var(--surface);
-      border-radius: var(--radius);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 24px;
-      transition: background 0.3s ease;
-    }
-
-    [data-theme="dark"] .doc-section {
-      background: var(--surface);
-    }
-
-    .doc-section h2 {
-      margin: 0 0 10px 0;
-      font-size: 1.25rem;
-      font-weight: 700;
-    }
-
-    .doc-section h3 {
-      margin: 10px 0 14px 0;
-      color: var(--accent);
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    .doc-section p {
-      color: var(--muted);
-      margin: 6px 0 14px 0;
-    }
-
-    .meta-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 0.93rem;
-    }
-
-    .meta-table td {
-      padding: 8px 10px;
-      vertical-align: top;
-    }
-
-    .meta-table tr {
-      border-bottom: 1px dashed var(--divider);
-    }
-
-    .doc-image {
-      display: block;
-      width: 100%;
-      max-width: 880px;
-      height: auto;
-      margin: 14px 0;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow-soft);
-      border: 1px solid var(--glass-border);
-    }
-
-    .image-caption {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 6px;
-      text-align: center;
-    }
-
-    /* Code blocks */
-    pre.code-block {
-      background: linear-gradient(180deg, rgba(245, 247, 250, 1), rgba(240, 243, 247, 1));
-      padding: 14px;
-      border-radius: var(--radius);
-      overflow: auto;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-      font-size: 0.92rem;
-      border: 1px solid var(--divider);
-    }
-
-    [data-theme="dark"] pre.code-block {
-      background: rgba(10, 12, 16, 0.65);
-    }
-
-    code.inline {
-      background: rgba(0, 0, 0, 0.05);
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
-    }
-
-    /* Footer */
-    footer.site-footer {
-      text-align: center;
-      padding: 22px 20px;
-      color: var(--muted);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--divider);
-      margin-top: 40px;
-    }
+    footer.site-footer { text-align:center; padding:22px 20px; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--divider); margin-top:40px; }
 
     /* Responsive */
-    @media(max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-        padding: 100px 18px 28px;
-      }
-
-      aside.sidebar {
-        position: relative;
-        top: auto;
-        padding-right: 0;
-      }
+    @media(max-width:900px) {
+      .container { grid-template-columns:1fr; padding: 100px 18px 28px; }
+      aside.sidebar { position:relative; top:auto; padding-right:0; }
     }
   </style>
 </head>
@@ -319,9 +133,9 @@
     </div>
 
     <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme">
-        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <!-- will be replaced by JS -->
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
+        <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <!-- icon replaced by JS on load -->
         </svg>
       </button>
     </div>
@@ -390,7 +204,7 @@
         </p>
 
       </article>
-      
+
       <article id="workflow" class="doc-section">
         <h2>Workflow</h2>
         <p>
@@ -461,34 +275,63 @@
   </footer>
 
   <script>
-    // Default theme: light. User can toggle to dark.
+    // Theme toggle with persistence + accessible state + visible icons in both modes
     (function () {
       const root = document.documentElement;
       const toggle = document.getElementById('themeToggle');
       const icon = document.getElementById('themeIcon');
 
-      let theme = 'light'; // light default as requested
-      root.setAttribute('data-theme', theme);
+      // determine initial theme: prefer saved -> prefer-color-scheme -> default light
+      const saved = localStorage.getItem('site-theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      let theme = saved || (prefersDark ? 'dark' : 'light');
 
-      function setIcon(t) {
-        if (t === 'dark') {
-          // moon icon
-          icon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-          return;
-        }
-        // sun icon
-        icon.innerHTML = '<circle cx="12" cy="12" r="3"></circle>\n          <path d="M12 2v2"></path>\n          <path d="M12 20v2"></path>\n          <path d="M4.2 4.2l1.4 1.4"></path>\n          <path d="M18.4 18.4l1.4 1.4"></path>\n          <path d="M2 12h2"></path>\n          <path d="M20 12h2"></path>\n          <path d="M4.2 19.8l1.4-1.4"></path>\n          <path d="M18.4 5.6l1.4-1.4"></path>';
+      function applyTheme(t) {
+        root.setAttribute('data-theme', t);
+        // reflect on toggle for styling/ARIA
+        toggle.setAttribute('aria-pressed', String(t === 'dark'));
+        toggle.setAttribute('data-theme', t);
+        toggle.title = t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
+        setIcon(t);
       }
 
-      setIcon(theme);
+      function setIcon(t) {
+        // Use icons that use currentColor. This guarantees they remain visible in both themes.
+        if (t === 'dark') {
+          // moon (filled) — white-on-dark via currentColor
+          icon.innerHTML = `
+            <path class="icon-fill" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          `;
+          return;
+        }
+        // sun (outline) — dark-on-light via currentColor
+        icon.innerHTML = `
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="M4.2 4.2l1.4 1.4"></path>
+          <path d="M18.4 18.4l1.4 1.4"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="M4.2 19.8l1.4-1.4"></path>
+          <path d="M18.4 5.6l1.4-1.4"></path>
+        `;
+      }
 
+      // Initialize
+      applyTheme(theme);
+
+      // Toggle action
       toggle.addEventListener('click', () => {
         theme = (theme === 'dark') ? 'light' : 'dark';
-        root.setAttribute('data-theme', theme);
-        setIcon(theme);
+        localStorage.setItem('site-theme', theme);
+        applyTheme(theme);
+        // micro animation: rotate icon briefly
+        icon.style.transform = 'rotate(20deg)';
+        setTimeout(() => icon.style.transform = '', 220);
       });
 
-      // Small helper: mark active nav link based on hash or first link
+      // Keyboard: space/enter already handled by button element; keep hash nav logic
       const links = document.querySelectorAll('.sidebar a');
       function setActiveFromHash() {
         const hash = location.hash || '#details';
@@ -497,7 +340,7 @@
       window.addEventListener('hashchange', setActiveFromHash);
       setActiveFromHash();
 
-      // Smooth scroll for internal links (improve UX on smaller screens)
+      // Smooth scroll for internal links
       document.querySelectorAll('a[href^="#"]').forEach(a => {
         a.addEventListener('click', function (e) {
           e.preventDefault();
