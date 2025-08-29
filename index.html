@@ -44,9 +44,35 @@
     html, body { height: 100%; margin: 0; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
 
     /* Header */
-    header.site-header {
-      position: sticky; top: 0; z-index: 1200; display:flex; align-items:center; gap: 16px; padding: 14px 20px; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85)); border-bottom: 1px solid var(--divider); box-shadow: var(--shadow-soft);
-    }
+   /* Header */
+header.site-header {
+  position: fixed;   /* was sticky */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1200;
+  display:flex;
+  align-items:center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+  border-bottom: 1px solid var(--divider);
+  box-shadow: var(--shadow-soft);
+}
+[data-theme="dark"] header.site-header {
+  background: rgba(7,10,21,0.75);
+}
+
+/* Layout */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;             /* remove top margin */
+  padding: 100px 20px 20px;   /* add top padding ≈ header height (adjust if needed) */
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 28px;
+}
+
     [data-theme="dark"] header.site-header { background: rgba(7,10,21,0.75); }
 
     .brand { display:flex; align-items:center; gap:12px; }
