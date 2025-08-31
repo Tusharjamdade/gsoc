@@ -123,156 +123,151 @@
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="brand">
-      <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
-      <div>
-        <h1>GSoC 2025 - Avro File Analysis</h1>
-        <p>@ Data For The Common Good</p>
-      </div>
+<header class="site-header">
+  <div class="brand">
+    <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
+    <div>
+      <h1>GSoC 2025 - Avro File Analysis</h1>
+      <p>@Data For The Common Good</p>
     </div>
+  </div>
 
-    <div class="header-actions">
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
-        <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <!-- icon replaced by JS on load -->
-        </svg>
-      </button>
-    </div>
-  </header>
+  <div class="header-actions">
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
+      <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <!-- icon replaced by JS on load -->
+      </svg>
+    </button>
+  </div>
+</header>
 
-  <main class="container" id="mainContainer">
-    <aside class="sidebar" aria-label="Documentation navigation">
-      <nav>
-        <ul>
-          <li><a href="#details" class="active">Project Information</a></li>
-          <li><a href="#overview">Overview</a></li>
-          <li><a href="#workflow">Workflow</a></li>
-          <li><a href="#distribution">Percentage Distribution</a></li>
-          <li><a href="#survival">Survival Curves</a></li>
-          <li><a href="#table1">Table 1 Analysis</a></li>
-        </ul>
-      </nav>
-    </aside>
+<main class="container" id="mainContainer">
+  <aside class="sidebar" aria-label="Documentation navigation">
+    <nav>
+      <ul>
+        <li><a href="#details" class="active">Project Information</a></li>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#distribution">Percentage Distribution</a></li>
+        <li><a href="#survival">Survival Curves</a></li>
+        <li><a href="#table1">Table 1 Analysis</a></li>
+      </ul>
+    </nav>
+  </aside>
 
-    <section class="main" id="content">
+  <section class="main" id="content">
 
-      <article id="details" class="doc-section">
-        <h2>Project Information</h2>
-        <table class="meta-table">
-          <tr>
-            <td style="width:130px"><strong>Name</strong></td>
-            <td>Tushar Jamdade</td>
-          </tr>
-          <tr>
-            <td><strong>Organization</strong></td>
-            <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good (D4CG)</a></td>
-          </tr>
-          <tr>
-            <td><strong>Mentor</strong></td>
-            <td>Steve Krasinsky</td>
-          </tr>
-          <tr>
-            <td><strong>Project Repo</strong></td>
-            <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank" rel="noopener">pcdc-analysis-notebook</a></td>
-          </tr>
-          <tr>
-            <td><strong>Technologies</strong></td>
-            <td>R, Docker, Apache Spark, RStudio, Shiny</td>
-          </tr>
-          <tr>
-            <td><strong>Topics</strong></td>
-            <td>Visualization, Automation, Cloud, Data Analysis, AVRO</td>
-          </tr>
-        </table>
-      </article>
+    <article id="details" class="doc-section">
+      <h2>Project Information</h2>
+      <table class="meta-table">
+        <tr>
+          <td style="width:130px"><strong>Name</strong></td>
+          <td>Tushar Jamdade</td>
+        </tr>
+        <tr>
+          <td><strong>Organization</strong></td>
+          <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good (D4CG)</a></td>
+        </tr>
+        <tr>
+          <td><strong>Mentor</strong></td>
+          <td>Steve Krasinsky</td>
+        </tr>
+        <tr>
+          <td><strong>Project Repo</strong></td>
+          <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank" rel="noopener">pcdc-analysis-notebook</a></td>
+        </tr>
+        <tr>
+          <td><strong>Technologies</strong></td>
+          <td>R, Docker, Apache Spark, RStudio, Shiny</td>
+        </tr>
+      </table>
+    </article>
 
-      <article id="overview" class="doc-section">
-        <h2>Overview</h2>
-        <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
-        <p>
-          This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical datasets stored in
-          AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark (via
-          sparklyr) to read and process large AVRO inputs and flattens complex hierarchical structures into tidy
-          tabular formats for downstream analysis.
-        </p>
+    <article id="overview" class="doc-section">
+      <h2>Overview</h2>
+      <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
+      <p>
+        This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical data stored in
+        AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark to read and process large AVRO files, flattening complex hierarchical structures into tidy
+        tabular formats for downstream analysis.
+      </p>
 
-        <p>
-          Users can explore entities and observation nodes, generate percentage distributions, and perform survival
-          analyses (Kaplan–Meier). A configurable Table-1 feature allows selection of covariates and statistical
-          comparisons when grouping is applied. Outputs (Excel, PNG) are download-ready for reporting.
-        </p>
+      <p>
+        Users can explore entities and observation nodes, generate percentage distributions, and perform survival
+        analyses (Kaplan–Meier). A configurable Table-1 feature allows the selection of covariates and statistical
+        comparisons when grouping is applied. Outputs (Excel, PNG) are download-ready for reporting.
+      </p>
+    </article>
 
-      </article>
+    <article id="workflow" class="doc-section">
+      <h2>Workflow</h2>
+      <p>
+        Users upload a PFB AVRO file in the PFB format. Valid files expose available entities, while invalid files generate an error. Core entities such as
+        <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>, and
+        <code class="inline">survival_characteristics</code> are included by default, as they are required for survival analysis (OS and EFS curves). Additional
+        entities may also be selected by the user.
+        <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
+        <div class="image-caption">Example: nested AVRO structure before flattening.</div>
+      </p>
 
-      <article id="workflow" class="doc-section">
-        <h2>Workflow</h2>
-        <p>
-          Users upload a PFB AVRO file. Valid files expose available entities. Core entities such as
-          <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>, and
-          <code class="inline">survival_characteristics</code> are included by default for survival analyses. Additional
-          entities may be selected by the user.
-          <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
-          <div class="image-caption">Example: nested AVRO structure before flattening.</div>
-        </p>
+      <p>
+        The application flattens nested records into a tidy table, preserves relationships, and merges entity-level information to create a single dataset that can be further used for analysis.
+      </p>
 
-        <p>
-          The application flattens nested records into a tidy table, preserves relationships, and merges entity-level
-          information for analyses like distribution counts and survival curves.
-        </p>
+      <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
+      <div class="image-caption">Example: flattened and merged data for further processing.</div>
+    </article>
 
-        <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
-        <div class="image-caption">After flattening, AVRO data is converted to a tabular form suitable for analysis.</div>
-      </article>
+    <article id="distribution" class="doc-section">
+      <h2>Percentage Distribution</h2>
+      <p>
+        After flattening, all categorical variables are displayed in a dropdown. Users can select variables to compute percentage distributions and download the results as Excel or PNG.
+      </p>
 
-      <article id="distribution" class="doc-section">
-        <h2>Percentage Distribution</h2>
-        <p>Select categorical variables to compute percentage distributions and download results as Excel or PNG.</p>
+      <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
+      <div class="image-caption">Example: distribution visualization (exportable).</div>
+    </article>
 
-        <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
-        <div class="image-caption">Distribution visualization (exportable).</div>
-      </article>
+    <article id="survival" class="doc-section">
+      <h2>Survival Curves</h2>
+      <h3>Overall Survival</h3>
+      <p>
+        Overall survival uses diagnosis and last-known survival status outcomes from <code class="inline">survival_characteristics</code>.
+        Kaplan–Meier estimators are applied to generate survival plots and downloadable PNGs with risk tables.
+      </p>
 
-      <article id="survival" class="doc-section">
-        <h2>Survival Curves</h2>
-        <h3>Overall Survival</h3>
-        <p>
-          Overall survival uses diagnosis and last-known outcome from <code class="inline">survival_characteristics</code>.
-          Kaplan–Meier estimators are used to generate survival plots and downloadable PNGs with risk tables.
-        </p>
+      <img src="img/image2.png" alt="Overall survival" class="doc-image">
 
-        <img src="img/image2.png" alt="Overall survival" class="doc-image">
+      <h3>Event-Free Survival</h3>
+      <p>
+        Event-free survival uses censoring status and event timing information (from <code class="inline">subject</code> and
+        <code class="inline">timing</code>) to compute survival curves.
+      </p>
+      <img src="img/image3.png" alt="Event-free survival" class="doc-image">
+    </article>
 
-        <h3>Event-Free Survival</h3>
-        <p>
-          Event-free survival uses censoring and event timing information (from <code class="inline">subject</code> and
-          <code class="inline">timing</code>) to compute curves.
-        </p>
-        <img src="img/image3.png" alt="Event-free survival" class="doc-image">
-      </article>
+    <article id="table1" class="doc-section">
+      <h2>Table-1 Analysis</h2>
+      <p>
+        Users can select covariates and variable types to create Table 1. Numeric variables display mean, median, and percentage of missing values, while categorical variables display counts, percentages, and missing values. 
+        When a subject ID grouping file is uploaded, two groups are generated (IDs in the file vs. remaining subjects), and p-values are computed where appropriate.  
+        Users can clear the calculation and perform another grouping, or perform a single grouping. Survival analysis can also be applied to the uploaded subject IDs.
+      </p>
 
-      <article id="table1" class="doc-section">
-        <h2>Table-1 Analysis</h2>
-        <p>
-          Select covariates and variable types to create summary tables. Numeric variables show mean/median/missing %;
-          categorical variables show counts and percentages. When a subject ID grouping file is uploaded, two groups are
-          produced (IDs in file vs remaining subjects) and p-values are computed where appropriate.
-        </p>
+      <img src="img/image4.png" alt="Table 1" class="doc-image">
+      <div class="image-caption">Interactive Table-1 output (example).</div>
+      <img src="img/image5.png" alt="Table 1" class="doc-image">
+      <div class="image-caption">Interactive Table-1 output (single grouping).</div>
+      <img src="img/image6.png" alt="Table 1" class="doc-image">
+      <div class="image-caption">Interactive Table-1 output (grouping + p-value).</div>
+    </article>
 
-        <img src="img/image4.png" alt="Table 1" class="doc-image">
-        <div class="image-caption">Interactive Table-1 output (example).</div>
-        <img src="img/image5.png" alt="Table 1" class="doc-image">
-        <div class="image-caption">Interactive Table-1 output (singe grouping).</div>
-        <img src="img/image6.png" alt="Table 1" class="doc-image">
-        <div class="image-caption">Interactive Table-1 output (grouping + P value).</div>
-      </article>
+  </section>
+</main>
 
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div>Made for GSoC • Tushar Jamdade • &copy; 2025</div>
-  </footer>
+<footer class="site-footer">
+  <div>Made for GSoC • Tushar Jamdade • &copy; 2025</div>
+</footer>
 
   <script>
     // Theme toggle with persistence + accessible state + visible icons in both modes
