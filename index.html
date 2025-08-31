@@ -17,7 +17,7 @@
        ===================== */
     :root {
       --bg: #f7f8fb;
-      --bg-accent: linear-gradient(180deg,#f7f8fb 0%, #eef2ff 100%);
+      --bg-accent: linear-gradient(180deg, #f7f8fb 0%, #eef2ff 100%);
       --muted: #6b7280;
       --text: #0f172a;
       --accent: #6d28d9;
@@ -28,246 +28,486 @@
       --container: 1100px;
       --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.06);
       --glass-border: rgba(15, 23, 42, 0.06);
-      --transition-fast: 180ms cubic-bezier(.2,.9,.2,1);
+      --transition-fast: 180ms cubic-bezier(.2, .9, .2, 1);
     }
 
     [data-theme="dark"] {
-      --bg: linear-gradient(180deg,#050812 0%, #061027 70%);
-      --bg-accent: linear-gradient(180deg,#050812 0%, #081227 70%);
+      --bg: linear-gradient(180deg, #050812 0%, #061027 70%);
+      --bg-accent: linear-gradient(180deg, #050812 0%, #081227 70%);
       --muted: #9aa4b2;
       --text: #e6eef7;
       --accent: #8b5cf6;
       --accent-2: #06b6d4;
       --surface: rgba(10, 14, 20, 0.65);
-      --divider: rgba(255,255,255,0.06);
-      --shadow-soft: 0 10px 28px rgba(0,0,0,0.6);
-      --glass-border: rgba(255,255,255,0.06);
+      --divider: rgba(255, 255, 255, 0.06);
+      --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.06);
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; margin: 0; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background: var(--bg); color: var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; line-height:1.6; transition: background var(--transition-fast), color var(--transition-fast); }
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.6;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
 
     /* Header */
     header.site-header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1200;
-      display: flex; align-items: center; gap: 16px;
-      padding: 12px 20px; backdrop-filter: blur(8px);
-      background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.85));
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1200;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 20px;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.85));
       border-bottom: 1px solid var(--divider);
       box-shadow: var(--shadow-soft);
       transition: background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
     }
 
     [data-theme="dark"] header.site-header {
-      background: linear-gradient(180deg, rgba(6,10,20,0.6), rgba(6,10,20,0.55));
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: linear-gradient(180deg, rgba(6, 10, 20, 0.6), rgba(6, 10, 20, 0.55));
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       box-shadow: var(--shadow-soft);
     }
 
-    .brand { display:flex; align-items:center; gap:14px; }
-    .logo-img { width:46px; height:46px; border-radius:10px; object-fit:cover; box-shadow: 0 6px 18px rgba(13, 18, 36, 0.06); border: 1px solid var(--glass-border); }
-    .brand h1 { margin:0; font-size:1.05rem; font-weight:700; letter-spacing:-0.3px; }
-    .brand p { margin:0; font-size:0.78rem; color:var(--muted); }
-
-    .header-actions { margin-left:auto; display:flex; gap:10px; align-items:center; }
-
-    .theme-toggle {
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:8px; gap:8px; border-radius:10px; cursor:pointer; border:1px solid var(--glass-border);
-      background: var(--surface); color: var(--text); box-shadow: 0 6px 18px rgba(13,18,36,0.04);
-      transition: transform 200ms ease, background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
-      width:44px; height:44px;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
     }
 
-    .theme-toggle:hover { transform: translateY(-2px); }
-    .theme-toggle:active { transform: translateY(0); }
-    .theme-toggle:focus { outline: 3px solid rgba(99, 102, 241, 0.16); outline-offset: 2px; }
+    .logo-img {
+      width: 46px;
+      height: 46px;
+      border-radius: 10px;
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(13, 18, 36, 0.06);
+      border: 1px solid var(--glass-border);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .brand p {
+      margin: 0;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      gap: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(13, 18, 36, 0.04);
+      transition: transform 200ms ease, background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 44px;
+      height: 44px;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle:active {
+      transform: translateY(0);
+    }
+
+    .theme-toggle:focus {
+      outline: 3px solid rgba(99, 102, 241, 0.16);
+      outline-offset: 2px;
+    }
 
     /* ensure svg icons adopt button color */
-    .theme-toggle svg { width:22px; height:22px; display:block; stroke: currentColor; fill: none; stroke-width:1.6; transition: transform 240ms var(--transition-fast), opacity 180ms ease; }
-    .theme-toggle .icon-fill { fill: currentColor; stroke: none; }
+    .theme-toggle svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      transition: transform 240ms var(--transition-fast), opacity 180ms ease;
+    }
+
+    .theme-toggle .icon-fill {
+      fill: currentColor;
+      stroke: none;
+    }
 
     /* Layout */
-    .container { max-width: var(--container); margin:0 auto; padding: 110px 22px 32px; display:grid; grid-template-columns: 240px 1fr; gap:30px; }
-    aside.sidebar { position: sticky; top: 110px; align-self:start; padding-right: 14px; }
-    .sidebar ul { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
-    .sidebar a { color: var(--text); text-decoration:none; padding:10px 14px; border-radius:12px; display:block; font-weight:600; font-size:0.95rem; transition: all 0.18s ease; }
-    .sidebar a:hover { background: rgba(109,40,217,0.06); color: var(--accent); transform: translateX(6px); }
-    .sidebar a.active { background: rgba(109,40,217,0.1); color: var(--accent); }
+    .container {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 110px 22px 32px;
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 30px;
+    }
 
-    section.main { background: transparent; }
+    aside.sidebar {
+      position: sticky;
+      top: 110px;
+      align-self: start;
+      padding-right: 14px;
+    }
 
-    .doc-section { padding:28px 26px 18px; background: var(--surface); border-radius: var(--radius); border:1px solid var(--divider); box-shadow: var(--shadow-soft); margin-bottom:24px; transition: background var(--transition-fast), border-color var(--transition-fast); }
-    .doc-section h2 { margin:0 0 10px 0; font-size:1.25rem; font-weight:700; }
-    .doc-section h3 { margin:10px 0 14px 0; color:var(--accent); font-size:1rem; font-weight:600; }
-    .doc-section p { color:var(--muted); margin:6px 0 14px 0; }
+    .sidebar ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-    .meta-table { width:100%; border-collapse:collapse; margin-top:14px; font-size:0.93rem; }
-    .meta-table td { padding:8px 10px; vertical-align:top; }
-    .meta-table tr { border-bottom: 1px dashed var(--divider); }
+    .sidebar a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 12px;
+      display: block;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.18s ease;
+    }
 
-    .doc-image { display:block; width:100%; max-width:880px; height:auto; margin:14px 0; border-radius: var(--radius); box-shadow: var(--shadow-soft); border: 1px solid var(--glass-border); }
-    .image-caption { font-size:0.82rem; color:var(--muted); margin-top:6px; text-align:center; }
+    .sidebar a:hover {
+      background: rgba(109, 40, 217, 0.06);
+      color: var(--accent);
+      transform: translateX(6px);
+    }
 
-    pre.code-block { background: linear-gradient(180deg, rgba(245,247,250,1), rgba(240,243,247,1)); padding:14px; border-radius:var(--radius); overflow:auto; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; font-size:0.92rem; border:1px solid var(--divider); }
-    code.inline { background: rgba(0,0,0,0.05); padding:2px 6px; border-radius:6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace; }
+    .sidebar a.active {
+      background: rgba(109, 40, 217, 0.1);
+      color: var(--accent);
+    }
 
-    footer.site-footer { text-align:center; padding:22px 20px; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--divider); margin-top:40px; }
+    section.main {
+      background: transparent;
+    }
+
+    .doc-section {
+      padding: 28px 26px 18px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 24px;
+      transition: background var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .doc-section h2 {
+      margin: 0 0 10px 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .doc-section h3 {
+      margin: 10px 0 14px 0;
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .doc-section p {
+      color: var(--muted);
+      margin: 6px 0 14px 0;
+    }
+
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.93rem;
+    }
+
+    .meta-table td {
+      padding: 8px 10px;
+      vertical-align: top;
+    }
+
+    .meta-table tr {
+      border-bottom: 1px dashed var(--divider);
+    }
+
+    .doc-image {
+      display: block;
+      width: 100%;
+      max-width: 880px;
+      height: auto;
+      margin: 14px 0;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--glass-border);
+    }
+
+    .image-caption {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 6px;
+      text-align: center;
+    }
+
+    pre.code-block {
+      background: linear-gradient(180deg, rgba(245, 247, 250, 1), rgba(240, 243, 247, 1));
+      padding: 14px;
+      border-radius: var(--radius);
+      overflow: auto;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      font-size: 0.92rem;
+      border: 1px solid var(--divider);
+    }
+
+    code.inline {
+      background: rgba(0, 0, 0, 0.05);
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+    }
+
+    footer.site-footer {
+      text-align: center;
+      padding: 22px 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--divider);
+      margin-top: 40px;
+    }
 
     /* Responsive */
     @media(max-width:900px) {
-      .container { grid-template-columns:1fr; padding: 100px 18px 28px; }
-      aside.sidebar { position:relative; top:auto; padding-right:0; }
+      .container {
+        grid-template-columns: 1fr;
+        padding: 100px 18px 28px;
+      }
+
+      aside.sidebar {
+        position: relative;
+        top: auto;
+        padding-right: 0;
+      }
+    }
+
+    #siteHeader {
+      cursor: default;
+      /* normal arrow */
+    }
+
+    #siteHeader .brand {
+      cursor: pointer;
+      /* hand only on brand area */
     }
   </style>
 </head>
 
 <body>
-<header class="site-header">
-  <div class="brand">
-    <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
-    <div>
-      <h1>GSoC 2025 - Avro File Analysis</h1>
-      <p>@Data For The Common Good</p>
+  <header class="site-header" id="siteHeader">
+    <div class="brand">
+      <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
+      <div>
+        <h1>GSoC 2025 - Avro File Analysis</h1>
+        <p>@ Data For The Common Good</p>
+      </div>
     </div>
-  </div>
 
-  <div class="header-actions">
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
-      <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <!-- icon replaced by JS on load -->
-      </svg>
-    </button>
-  </div>
-</header>
+    <div class="header-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
+        <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <!-- icon replaced by JS on load -->
+        </svg>
+      </button>
+    </div>
+  </header>
 
-<main class="container" id="mainContainer">
-  <aside class="sidebar" aria-label="Documentation navigation">
-    <nav>
-      <ul>
-        <li><a href="#details" class="active">Project Information</a></li>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#workflow">Workflow</a></li>
-        <li><a href="#distribution">Percentage Distribution</a></li>
-        <li><a href="#survival">Survival Curves</a></li>
-        <li><a href="#table1">Table 1 Analysis</a></li>
-      </ul>
-    </nav>
-  </aside>
+  <script>
+    document.getElementById("siteHeader").addEventListener("click", function (e) {
+      // prevent interfering with theme button clicks
+      if (!e.target.closest("#themeToggle")) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+  </script>
 
-  <section class="main" id="content">
 
-    <article id="details" class="doc-section">
-      <h2>Project Information</h2>
-      <table class="meta-table">
-        <tr>
-          <td style="width:130px"><strong>Name</strong></td>
-          <td>Tushar Jamdade</td>
-        </tr>
-        <tr>
-          <td><strong>Organization</strong></td>
-          <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good (D4CG)</a></td>
-        </tr>
-        <tr>
-          <td><strong>Mentor</strong></td>
-          <td>Steve Krasinsky</td>
-        </tr>
-        <tr>
-          <td><strong>Project Repo</strong></td>
-          <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank" rel="noopener">pcdc-analysis-notebook</a></td>
-        </tr>
-        <tr>
-          <td><strong>Technologies</strong></td>
-          <td>R, Docker, Apache Spark, RStudio, Shiny</td>
-        </tr>
-      </table>
-    </article>
+  <main class="container" id="mainContainer">
+    <aside class="sidebar" aria-label="Documentation navigation">
+      <nav>
+        <ul>
+          <li><a href="#details" class="active">Project Information</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#workflow">Workflow</a></li>
+          <li><a href="#distribution">Percentage Distribution</a></li>
+          <li><a href="#survival">Survival Curves</a></li>
+          <li><a href="#table1">Table 1 Analysis</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-    <article id="overview" class="doc-section">
-      <h2>Overview</h2>
-      <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
-      <p>
-        This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical data stored in
-        AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark to read and process large AVRO files, flattening complex hierarchical structures into tidy
-        tabular formats for downstream analysis.
-      </p>
+    <section class="main" id="content">
 
-      <p>
-        Users can explore entities and observation nodes, generate percentage distributions, and perform survival
-        analyses (Kaplan–Meier). A configurable Table-1 feature allows the selection of covariates and statistical
-        comparisons when grouping is applied. Outputs (Excel, PNG) are download-ready for reporting.
-      </p>
-    </article>
+      <article id="details" class="doc-section">
+        <h2>Project Information</h2>
+        <table class="meta-table">
+          <tr>
+            <td style="width:130px"><strong>Name</strong></td>
+            <td>Tushar Jamdade</td>
+          </tr>
+          <tr>
+            <td><strong>Organization</strong></td>
+            <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good
+                (D4CG)</a></td>
+          </tr>
+          <tr>
+            <td><strong>Mentor</strong></td>
+            <td>Steve Krasinsky</td>
+          </tr>
+          <tr>
+            <td><strong>Project Repo</strong></td>
+            <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank"
+                rel="noopener">pcdc-analysis-notebook</a></td>
+          </tr>
+          <tr>
+            <td><strong>Contributors</strong></td>
+            <td><a href="https://commons.cri.uchicago.edu/2025/08/12/d4cg-and-google-summer-of-code%ef%bf%bc/"
+                target="_blank" rel="noopener">GSoC Contributors at D4CG</a></td>
+          </tr>
 
-    <article id="workflow" class="doc-section">
-      <h2>Workflow</h2>
-      <p>
-        Users upload a PFB AVRO file in the PFB format. Valid files expose available entities, while invalid files generate an error. Core entities such as
-        <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>, and
-        <code class="inline">survival_characteristics</code> are included by default, as they are required for survival analysis (OS and EFS curves). Additional
-        entities may also be selected by the user.
-        <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
+          <tr>
+            <td><strong>Technologies</strong></td>
+            <td>R, Docker, Apache Spark, RStudio, Shiny</td>
+          </tr>
+        </table>
+      </article>
+
+      <article id="overview" class="doc-section">
+        <h2>Overview</h2>
+        <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
+        <p>
+          This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical data stored in
+          AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark to read
+          and process large AVRO files, flattening complex hierarchical structures into tidy
+          tabular formats for downstream analysis.
+        </p>
+
+        <p>
+          Users can explore entities and observation nodes, generate percentage distributions, and perform survival
+          analyses (Kaplan–Meier). A configurable Table-1 feature allows the selection of covariates and statistical
+          comparisons when grouping is applied. Outputs (Excel, PNG) are download-ready for reporting.
+        </p>
+      </article>
+
+      <article id="workflow" class="doc-section">
+        <h2>Workflow</h2>
+        <p>
+          Users upload a PFB AVRO file in the PFB format. Valid files expose available entities, while invalid files
+          generate an error. Core entities such as
+          <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>,
+          and
+          <code class="inline">survival_characteristics</code> are included by default, as they are required for
+          survival analysis (OS and EFS curves). Additional
+          entities may also be selected by the user.
+          <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
         <div class="image-caption">Example: nested AVRO structure before flattening.</div>
-      </p>
+        </p>
 
-      <p>
-        The application flattens nested records into a tidy table, preserves relationships, and merges entity-level information to create a single dataset that can be further used for analysis.
-      </p>
+        <p>
+          The application flattens nested records into a tidy table, preserves relationships, and merges entity-level
+          information to create a single dataset that can be further used for analysis.
+        </p>
 
-      <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
-      <div class="image-caption">Example: flattened and merged data for further processing.</div>
-    </article>
+        <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
+        <div class="image-caption">Example: flattened and merged data for further processing.</div>
+      </article>
 
-    <article id="distribution" class="doc-section">
-      <h2>Percentage Distribution</h2>
-      <p>
-        After flattening, all categorical variables are displayed in a dropdown. Users can select variables to compute percentage distributions and download the results as Excel or PNG.
-      </p>
+      <article id="distribution" class="doc-section">
+        <h2>Percentage Distribution</h2>
+        <p>
+          After flattening, all categorical variables are displayed in a dropdown. Users can select variables to compute
+          percentage distributions and download the results as Excel or PNG.
+        </p>
 
-      <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
-      <div class="image-caption">Example: distribution visualization (exportable).</div>
-    </article>
+        <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
+        <div class="image-caption">Example: distribution visualization (exportable).</div>
+      </article>
 
-    <article id="survival" class="doc-section">
-      <h2>Survival Curves</h2>
-      <h3>Overall Survival</h3>
-      <p>
-        Overall survival uses diagnosis and last-known survival status outcomes from <code class="inline">survival_characteristics</code>.
-        Kaplan–Meier estimators are applied to generate survival plots and downloadable PNGs with risk tables.
-      </p>
+      <article id="survival" class="doc-section">
+        <h2>Survival Curves</h2>
+        <h3>Overall Survival</h3>
+        <p>
+          Overall survival uses diagnosis and last-known survival status outcomes from <code
+            class="inline">survival_characteristics</code>.
+          Kaplan–Meier estimators are applied to generate survival plots and downloadable PNGs with risk tables.
+        </p>
 
-      <img src="img/image2.png" alt="Overall survival" class="doc-image">
+        <img src="img/image2.png" alt="Overall survival" class="doc-image">
 
-      <h3>Event-Free Survival</h3>
-      <p>
-        Event-free survival uses censoring status and event timing information (from <code class="inline">subject</code> and
-        <code class="inline">timing</code>) to compute survival curves.
-      </p>
-      <img src="img/image3.png" alt="Event-free survival" class="doc-image">
-    </article>
+        <h3>Event-Free Survival</h3>
+        <p>
+          Event-free survival uses censoring status and event timing information (from <code
+            class="inline">subject</code> and
+          <code class="inline">timing</code>) to compute survival curves.
+        </p>
+        <img src="img/image3.png" alt="Event-free survival" class="doc-image">
+      </article>
 
-    <article id="table1" class="doc-section">
-      <h2>Table-1 Analysis</h2>
-      <p>
-        Users can select covariates and variable types to create Table 1. Numeric variables display mean, median, and percentage of missing values, while categorical variables display counts, percentages, and missing values. 
-        When a subject ID grouping file is uploaded, two groups are generated (IDs in the file vs. remaining subjects), and p-values are computed where appropriate.  
-        Users can clear the calculation and perform another grouping, or perform a single grouping. Survival analysis can also be applied to the uploaded subject IDs.
-      </p>
+      <article id="table1" class="doc-section">
+        <h2>Table-1 Analysis</h2>
+        <p>
+          Users can select covariates and variable types to create Table 1. Numeric variables display mean, median, and
+          percentage of missing values, while categorical variables display counts, percentages, and missing values.
+          When a subject ID grouping file is uploaded, two groups are generated (IDs in the file vs. remaining
+          subjects), and p-values are computed where appropriate.
+          Users can clear the calculation and perform another grouping, or perform a single grouping. Survival analysis
+          can also be applied to the uploaded subject IDs.
+        </p>
 
-      <img src="img/image4.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (example).</div>
-      <img src="img/image5.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (single grouping).</div>
-      <img src="img/image6.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (grouping + p-value).</div>
-    </article>
+        <img src="img/image4.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (example).</div>
+        <img src="img/image5.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (single grouping).</div>
+        <img src="img/image6.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (grouping + p-value).</div>
+      </article>
 
-  </section>
-</main>
+    </section>
+  </main>
 
-<footer class="site-footer">
-  <div>Made for GSoC • Tushar Jamdade • &copy; 2025</div>
-</footer>
+  <footer class="site-footer">
+    <div>Made with ❤️ by Tushar Jamdade • &copy; 2025</div>
+
+  </footer>
 
   <script>
     // Theme toggle with persistence + accessible state + visible icons in both modes
