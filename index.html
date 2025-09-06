@@ -29,6 +29,9 @@
       --shadow-soft: 0 6px 20px rgba(15, 23, 42, 0.06);
       --glass-border: rgba(15, 23, 42, 0.06);
       --transition-fast: 180ms cubic-bezier(.2, .9, .2, 1);
+
+      /* header offset used for scroll-margin-top; JS will set this dynamically on load/resize */
+      --header-offset: 110px;
     }
 
     [data-theme="dark"] {
@@ -100,6 +103,28 @@
       border: 1px solid var(--glass-border);
     }
 
+    .logo-img-footer {
+      max-height: 36px;
+      /* logos won’t exceed 36px height */
+      width: auto;
+      /* auto width = keeps aspect ratio */
+      height: auto;
+      /* ensures scaling works */
+      border-radius: 6px;
+      /* subtle rounded corners */
+      object-fit: contain;
+      /* prevents cropping */
+      box-shadow: none;
+      /* no fake background */
+      border: none;
+      /* no border background */
+      background: transparent;
+      /* ensures clean in dark mode */
+      vertical-align: middle;
+      /* aligns with text */
+    }
+
+
     .brand h1 {
       margin: 0;
       font-size: 1.05rem;
@@ -109,7 +134,7 @@
 
     .brand p {
       margin: 0;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       color: var(--muted);
     }
 
@@ -166,6 +191,34 @@
       stroke: none;
     }
 
+    /* NAV toggle (hamburger) */
+    .nav-toggle {
+      display: none;
+      /* shown on small screens via media query */
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      gap: 8px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid var(--glass-border);
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 6px 18px rgba(13, 18, 36, 0.04);
+      transition: transform 200ms ease, background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      width: 44px;
+      height: 44px;
+    }
+
+    .nav-toggle svg {
+      width: 22px;
+      height: 22px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+    }
+
     /* Layout */
     .container {
       max-width: var(--container);
@@ -209,11 +262,6 @@
       transform: translateX(6px);
     }
 
-    .sidebar a.active {
-      background: rgba(109, 40, 217, 0.1);
-      color: var(--accent);
-    }
-
     section.main {
       background: transparent;
     }
@@ -226,6 +274,8 @@
       box-shadow: var(--shadow-soft);
       margin-bottom: 24px;
       transition: background var(--transition-fast), border-color var(--transition-fast);
+      /* use header offset so anchors land below the fixed header */
+      scroll-margin-top: var(--header-offset);
     }
 
     .doc-section h2 {
@@ -306,6 +356,75 @@
       margin-top: 40px;
     }
 
+    /* Mobile nav overlay / drawer */
+    .mobile-nav {
+      position: fixed;
+      inset: 0;
+      z-index: 1300;
+      display: none;
+      align-items: stretch;
+      justify-content: flex-start;
+      background: rgba(0, 0, 0, 0.32);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+    }
+
+    .mobile-nav.open {
+      display: flex;
+    }
+
+    .mobile-nav-panel {
+      width: min(320px, 86%);
+      max-width: 340px;
+      height: 100%;
+      background: var(--surface);
+      box-shadow: 0 18px 40px rgba(2, 6, 23, 0.3);
+      padding: 18px;
+      transform: translateX(-6%);
+      animation: slideIn 220ms cubic-bezier(.2, .9, .2, 1) forwards;
+      border-right: 1px solid var(--divider);
+      overflow-y: auto;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-8%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .mobile-nav-panel .mobile-nav-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .mobile-nav-panel .mobile-nav-content {
+      margin-top: 8px;
+    }
+
+    .mobile-nav-panel .mobile-nav-content a {
+      display: block;
+      padding: 12px 10px;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .mobile-nav-panel .mobile-nav-content a.active {
+      background: rgba(109, 40, 217, 0.08);
+      color: var(--accent);
+    }
+
     /* Responsive */
     @media(max-width:900px) {
       .container {
@@ -313,12 +432,17 @@
         padding: 100px 18px 28px;
       }
 
+      /* Hide the desktop sidebar on mobile — it will be available via the hamburger */
       aside.sidebar {
-        position: relative;
-        top: auto;
-        padding-right: 0;
+        display: none;
+      }
+
+      /* show hamburger nav toggle in header */
+      .nav-toggle {
+        display: inline-flex;
       }
     }
+
 
     #siteHeader {
       cursor: default;
@@ -329,22 +453,49 @@
       cursor: pointer;
       /* hand only on brand area */
     }
+
     .meta-table a {
-  color: #0066cc;   /* Pick your preferred color */
-  text-decoration: none; /* removes underline (optional) */
-}
+      color: #0066cc;
+      /* Pick your preferred color */
+      text-decoration: none;
+      /* removes underline (optional) */
+    }
 
-.meta-table a:hover {
-  color: #004999;   /* darker shade on hover */
-  text-decoration: underline; /* underline only on hover (optional) */
-}
+    .meta-table a:hover {
+      color: #004999;
+      /* darker shade on hover */
+      text-decoration: underline;
+      /* underline only on hover (optional) */
+    }
 
+    #mobileNav ul {
+      list-style: none;
+      /* removes the bullet dots */
+      padding: 0;
+      /* removes left indentation */
+      margin: 0;
+    }
+
+    /* Default (mobile/tablet) stays as is */
+    #themeToggle {
+      position: relative;
+      right: 0;
+    }
+
+    /* On laptops/desktops, move it left */
+    @media (min-width: 1024px) {
+      #themeToggle {
+        position: relative;
+        right: 100px;
+        /* shift left by 100px */
+      }
+    }
   </style>
 </head>
 
 <body>
   <header class="site-header" id="siteHeader">
-    <div class="brand">
+    <div class="brand" id="brandButton">
       <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
       <div>
         <h1>GSoC 2025 - AVRO File Analysis</h1>
@@ -353,6 +504,15 @@
     </div>
 
     <div class="header-actions">
+      <!-- NAV (hamburger) toggle for small screens -->
+      <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false"
+        aria-controls="mobileNav">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round"></path>
+        </svg>
+      </button>
+
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
         <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <!-- icon replaced by JS on load -->
@@ -361,147 +521,178 @@
     </div>
   </header>
 
- <script>
-  document.querySelector(".brand").addEventListener("click", function () {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-</script>
-
-
+  <script>
+    // brand clickable (keeps original behavior)
+    document.getElementById("brandButton").addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  </script>
 
   <main class="container" id="mainContainer">
-  <aside class="sidebar" aria-label="Documentation navigation">
-    <nav>
-      <ul>
-        <li><a href="#details" aria-current="page">Project Information</a></li>
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#workflow">Workflow</a></li>
-        <li><a href="#distribution">Percentage Distribution</a></li>
-        <li><a href="#survival">Survival Curves</a></li>
-        <li><a href="#table1">Table 1 Analysis</a></li>
-      </ul>
-    </nav>
-  </aside>
+    <aside class="sidebar" aria-label="Documentation navigation">
+      <nav>
+        <ul>
+          <li><a href="#details" aria-current="page">Project Information</a></li>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#workflow">Workflow</a></li>
+          <li><a href="#distribution">Percentage Distribution</a></li>
+          <li><a href="#survival">Survival Curves</a></li>
+          <li><a href="#table1">Table 1 Analysis</a></li>
+        </ul>
+      </nav>
+    </aside>
 
-  <section class="main" id="content">
-    <article id="details" class="doc-section">
-      <h2>Project Information</h2>
-      <table class="meta-table">
-        <tr>
-          <td style="width:130px"><strong>Name</strong></td>
-          <td>Tushar Jamdade</td>
-        </tr>
-        <tr>
-          <td><strong>Organization</strong></td>
-          <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good (D4CG)</a></td>
-        </tr>
-        <tr>
-          <td><strong>Mentor</strong></td>
-          <td>Steve Krasinsky</td>
-        </tr>
-        <tr>
-          <td><strong>Project Repo</strong></td>
-          <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank" rel="noopener">pcdc-analysis-notebook</a></td>
-        </tr>
-        <tr>
-          <td><strong>Contributors</strong></td>
-          <td><a href="https://commons.cri.uchicago.edu/2025/08/12/d4cg-and-google-summer-of-code/" target="_blank" rel="noopener">GSoC Contributors at D4CG</a></td>
-        </tr>
-        <tr>
-          <td><strong>Technologies</strong></td>
-          <td>R, Docker, Apache Spark, RStudio, Shiny</td>
-        </tr>
-      </table>
-    </article>
+    <section class="main" id="content">
+      <article id="details" class="doc-section">
+        <h2>Project Information</h2>
+        <table class="meta-table">
+          <tr>
+            <td style="width:130px"><strong>Name</strong></td>
+            <td><a href="https://github.com/Tusharjamdade" target="_blank" rel="noopener">Tushar Jamdade</a></td>
+          </tr>
+          <tr>
+            <td style="width:130px"><strong>Email</strong></td>
+            <td><a href="mailto:tusharnjamdade@gmail.com" target="_blank" rel="noopener">tusharnjamdade@gmail.com</a>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Organization</strong></td>
+            <td><a href="https://commons.cri.uchicago.edu/" target="_blank" rel="noopener">Data for the Common Good
+                (D4CG)</a></td>
+          </tr>
+          <tr>
+            <td><strong>Mentor</strong></td>
+            <td>Steve Krasinsky</td>
+          </tr>
+          <tr>
+            <td><strong>Project Repo</strong></td>
+            <td><a href="https://github.com/chicagopcdc/pcdc-analysis-notebook" target="_blank"
+                rel="noopener">pcdc-analysis-notebook</a></td>
+          </tr>
+          <tr>
+            <td><strong>Contributors</strong></td>
+            <td><a href="https://commons.cri.uchicago.edu/2025/08/12/d4cg-and-google-summer-of-code/" target="_blank"
+                rel="noopener">GSoC Contributors at D4CG</a></td>
+          </tr>
+          <tr>
+            <td><strong>Technologies</strong></td>
+            <td>R, Docker, Apache Spark, RStudio, Shiny</td>
+          </tr>
+        </table>
+      </article>
 
-    <article id="overview" class="doc-section">
-      <h2>Overview</h2>
-      <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
-      <p>
-        This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical data stored in
-        AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark to read
-        and process large AVRO files, flattening complex hierarchical structures into tidy
-        tabular formats for downstream analysis.
-      </p>
-      <p>
-        Users can explore entities and observation nodes, generate percentage distributions, and perform survival
-        analyses (Kaplan–Meier). A configurable Table-1 feature allows the selection of covariates and statistical
-        comparisons when grouping is applied. Outputs (Excel, PNG) are download ready for reporting.
-      </p>
-    </article>
+      <article id="overview" class="doc-section">
+        <h2>Overview</h2>
+        <h3>Dockerized R/Shiny Application for PFB AVRO Biomedical Data Analysis</h3>
+        <p>
+          This project provides a Dockerized RStudio-based Shiny application for analyzing biomedical data stored in
+          AVRO files using the Portable Format for Biomedical (PFB) standard. The system leverages Apache Spark to read
+          and process large AVRO files, flattening complex hierarchical structures into tidy
+          tabular formats for downstream analysis.
+        </p>
+        <p>
+          Users can explore entities and observation nodes, generate percentage distributions, and perform survival
+          analyses (Kaplan–Meier). A configurable Table-1 feature allows the selection of covariates and statistical
+          comparisons when grouping is applied. Outputs (Excel, PNG) are download ready for reporting.
+        </p>
+      </article>
 
-    <article id="workflow" class="doc-section">
-      <h2>Workflow</h2>
-      <p>
-        Users upload a file in the PFB AVRO format. Valid files expose available entities, while invalid files
-        generate an error. Core entities such as
-        <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>,
-        and <code class="inline">survival_characteristics</code> are included by default, as they are required for
-        survival analysis (OS and EFS curves). Additional entities may also be selected by the user.
-        <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
+      <article id="workflow" class="doc-section">
+        <h2>Workflow</h2>
+        <p>
+          Users upload a file in the PFB AVRO format. Valid files expose available entities, while invalid files
+          generate an error. Core entities such as
+          <code class="inline">person</code>, <code class="inline">subject</code>, <code class="inline">timing</code>,
+          and <code class="inline">survival_characteristics</code> are included by default, as they are required for
+          survival analysis (OS and EFS curves). Additional entities may also be selected by the user.
+          <img src="img/avrodata.png" alt="AVRO nested data" class="doc-image">
         <div class="image-caption">Example: nested AVRO structure before flattening.</div>
-      </p>
-      <p>
-        The application flattens nested records into a tidy table, preserves relationships, and merges entity-level
-        information to create a single dataset that can be further used for analysis.
-      </p>
-      <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
-      <div class="image-caption">Example: flattened and merged data for further processing.</div>
-    </article>
+        </p>
+        <p>
+          The application flattens nested records into a tidy table, preserves relationships, and merges entity-level
+          information to create a single dataset that can be further used for analysis.
+        </p>
+        <img src="img/flatten1.png" alt="Flattened table" class="doc-image">
+        <div class="image-caption">Example: flattened and merged data for further processing.</div>
+      </article>
 
-    <article id="distribution" class="doc-section">
-      <h2>Percentage Distribution</h2>
-      <p>
-        After flattening, all categorical variables are displayed in a dropdown. Users can select variables to compute
-        percentage distributions and download the results as Excel or PNG.
-      </p>
-      <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
-      <div class="image-caption">Example: distribution visualization (exportable).</div>
-    </article>
+      <article id="distribution" class="doc-section">
+        <h2>Percentage Distribution</h2>
+        <p>
+          After flattening, all categorical variables are displayed in a dropdown. Users can select variables to compute
+          percentage distributions and download the results as Excel or PNG.
+        </p>
+        <img src="img/image1.png" alt="Percentage distribution" class="doc-image">
+        <div class="image-caption">Example: distribution visualization (exportable).</div>
+      </article>
 
-    <article id="survival" class="doc-section">
-      <h2>Survival Curves</h2>
-      <h3>Overall Survival</h3>
-      <p>
-        Overall survival uses diagnosis and last-known survival status outcomes from
-        <code class="inline">survival_characteristics</code>.
-        Kaplan–Meier estimators are applied to generate survival plots and downloadable PNGs with risk tables.
-      </p>
-      <img src="img/image2.png" alt="Overall survival" class="doc-image">
+      <article id="survival" class="doc-section">
+        <h2>Survival Curves</h2>
+        <h3>Overall Survival</h3>
+        <p>
+          Overall survival uses diagnosis and last-known survival status outcomes from
+          <code class="inline">survival_characteristics</code>.
+          Kaplan–Meier estimators are applied to generate survival plots and downloadable PNGs with risk tables.
+        </p>
+        <img src="img/image2.png" alt="Overall survival" class="doc-image">
 
-      <h3>Event-Free Survival</h3>
-      <p>
-        Event-free survival uses censoring status and event timing information (from
-        <code class="inline">subject</code> and <code class="inline">timing</code>) to compute survival curves.
-      </p>
-      <img src="img/image3.png" alt="Event-free survival" class="doc-image">
-    </article>
+        <h3>Event-Free Survival</h3>
+        <p>
+          Event-free survival uses censoring status and event timing information (from
+          <code class="inline">subject</code> and <code class="inline">timing</code>) to compute survival curves.
+        </p>
+        <img src="img/image3.png" alt="Event-free survival" class="doc-image">
+      </article>
 
-    <article id="table1" class="doc-section">
-      <h2>Table-1 Analysis</h2>
-      <p>
-        Users can select covariates and variable types to create Table 1. Numeric variables display mean, median, and
-        percentage of missing values, while categorical variables display counts, percentages, and missing values.
-        When a subject ID grouping file is uploaded, two groups are generated (IDs in the file vs. remaining
-        subjects), and p-values are computed where appropriate.
-        Users can clear the calculation and perform another grouping, or perform a single grouping. Survival analysis
-        can also be applied to the uploaded subject IDs.
-      </p>
-      <img src="img/image4.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (example).</div>
-      <img src="img/image5.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (single grouping).</div>
-      <img src="img/image6.png" alt="Table 1" class="doc-image">
-      <div class="image-caption">Interactive Table-1 output (grouping + p-value).</div>
-    </article>
-  </section>
-</main>
+      <article id="table1" class="doc-section">
+        <h2>Table-1 Analysis</h2>
+        <p>
+          Users can select covariates and variable types to create Table 1. Numeric variables display mean, median, and
+          percentage of missing values, while categorical variables display counts, percentages, and missing values.
+          When a subject ID grouping file is uploaded, two groups are generated (IDs in the file vs. remaining
+          subjects), and p-values are computed where appropriate.
+          Users can clear the calculation and perform another grouping, or perform a single grouping. Survival analysis
+          can also be applied to the uploaded subject IDs.
+        </p>
+        <img src="img/image4.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (example).</div>
+        <img src="img/image5.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (single grouping).</div>
+        <img src="img/image6.png" alt="Table 1" class="doc-image">
+        <div class="image-caption">Interactive Table-1 output (grouping + p-value).</div>
+      </article>
+    </section>
+  </main>
 
+  <!-- Mobile nav markup (controlled by JS) -->
+  <div id="mobileNav" class="mobile-nav" aria-hidden="true">
+    <div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-labelledby="mobileNavTitle">
+      <div class="mobile-nav-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <img src="img/gsoc.png" alt=""
+            style="width:36px;height:36px;border-radius:8px;border:1px solid var(--glass-border);">
+          <div>
+            <div id="mobileNavTitle" style="font-weight:700;">GSoC 2025 - AVRO File Analysis</div>
+            <div style="font-size:0.75rem;color:var(--muted);">@ Data For The Common Good</div>
+            <!-- <h1>GSoC 2025 - AVRO File Analysis</h1>
+           <p>@ Data For The Common Good</p> -->
+          </div>
+        </div>
+        <button id="mobileNavClose" class="nav-toggle" aria-label="Close navigation" title="Close navigation">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-nav-content" id="mobileNavContent" aria-label="Mobile navigation"></nav>
+    </div>
+  </div>
 
-  <footer class="site-footer">
-    <div>Made by Tushar Jamdade • &copy; 2025</div>
-
+  <footer class="site-footer" style="text-align:center; padding:15px;">
+    <span style="font-size:14px;">&copy; Google Summer of Code 2025 · Data For Common Good</span>
   </footer>
+
 
   <script>
     // Theme toggle with persistence + accessible state + visible icons in both modes
@@ -565,20 +756,148 @@
       function setActiveFromHash() {
         const hash = location.hash || '#details';
         links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+        // for mobile nav links too (they will be clones)
+        document.querySelectorAll('#mobileNavContent a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
       }
       window.addEventListener('hashchange', setActiveFromHash);
       setActiveFromHash();
 
-      // Smooth scroll for internal links
-      document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute('href'));
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, '', this.getAttribute('href'));
-          setActiveFromHash();
+      // Smooth scroll for internal links — with header offset adjustment
+      // We'll replace the old scrollIntoView with a scroll offset equal to the header height.
+      function getHeaderOffset() {
+        const header = document.querySelector('header.site-header');
+        // add a tiny margin (8-12px) so the section doesn't butt right up to the header
+        return (header ? header.offsetHeight : 110) + 12;
+      }
+
+      // intercept clicks for ALL same-page links (including mobile nav)
+      function handleAnchorClicks(selector) {
+        document.querySelectorAll(selector).forEach(a => {
+          a.addEventListener('click', function (e) {
+            const href = this.getAttribute('href') || '';
+            if (!href.startsWith('#')) return; // external or non-anchor
+            const target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+            const headerOffset = getHeaderOffset();
+            const top = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+            window.scrollTo({ top, behavior: 'smooth' });
+            history.pushState(null, '', href);
+            setActiveFromHash();
+            // if mobile nav open, close it
+            closeMobileNav();
+          });
         });
+      }
+
+      // initial binding for both desktop and mobile anchors
+      handleAnchorClicks('a[href^="#"]');
+
+      // Re-bind when mobile nav is populated (see below)
+      window.handleAnchorClicks = handleAnchorClicks; // expose for later
+
+    })();
+  </script>
+
+  <script>
+    /* ============================
+       Mobile nav drawer: minimal, accessible
+       - On small screens (<= 900px) we hide aside.sidebar via CSS and show the hamburger.
+       - The JS clones the aside nav into the mobile nav panel.
+       - Clicking a link closes the drawer.
+       ============================ */
+
+    (function () {
+      const navToggle = document.getElementById('navToggle');
+      const mobileNav = document.getElementById('mobileNav');
+      const mobileNavContent = document.getElementById('mobileNavContent');
+      const mobileNavClose = document.getElementById('mobileNavClose');
+      const asideNav = document.querySelector('aside.sidebar nav');
+      const header = document.querySelector('header.site-header');
+
+      // clone aside nav into mobile panel (so desktop aside remains untouched)
+      if (asideNav && mobileNavContent) {
+        const clone = asideNav.cloneNode(true);
+        // remove any aria-current on the clone to avoid duplicates; set active class by hash later
+        clone.querySelectorAll('[aria-current]').forEach(el => el.removeAttribute('aria-current'));
+        mobileNavContent.appendChild(clone);
+      }
+
+      // add accessible attributes and helper functions
+      function openMobileNav() {
+        mobileNav.classList.add('open');
+        mobileNav.setAttribute('aria-hidden', 'false');
+        navToggle.setAttribute('aria-expanded', 'true');
+        // prevent background scroll when open
+        document.body.style.overflow = 'hidden';
+        // set focus into the panel
+        const firstFocusable = mobileNav.querySelector('a, button, [tabindex]:not([tabindex="-1"])');
+        if (firstFocusable) firstFocusable.focus();
+      }
+      function closeMobileNav() {
+        mobileNav.classList.remove('open');
+        mobileNav.setAttribute('aria-hidden', 'true');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+        navToggle.focus();
+      }
+
+      navToggle.addEventListener('click', function () {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        if (expanded) closeMobileNav();
+        else openMobileNav();
       });
+
+      mobileNavClose.addEventListener('click', closeMobileNav);
+
+      // close when clicking outside panel (on the overlay)
+      mobileNav.addEventListener('click', (e) => {
+        if (e.target === mobileNav) closeMobileNav();
+      });
+
+      // close on Escape
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMobileNav();
+      });
+
+      // update active classes in mobile nav when hash changes
+      window.addEventListener('hashchange', () => {
+        document.querySelectorAll('#mobileNavContent a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === location.hash));
+      });
+
+      // close drawer when any mobile nav link clicked (the anchor handler handles smooth scroll)
+      mobileNavContent.addEventListener('click', (e) => {
+        const link = e.target.closest('a');
+        if (!link) return;
+        // close - smooth scroll handled by anchor handler
+        setTimeout(closeMobileNav, 0);
+      });
+
+      // ensure anchor click binding also applies to the newly cloned mobile nav links
+      if (window.handleAnchorClicks) {
+        window.handleAnchorClicks('#mobileNavContent a[href^="#"]');
+      }
+
+      /* ========= header offset sync =========
+         keep CSS var --header-offset in sync with actual header height
+         so scroll-margin-top works reliably on resize and theme changes
+      */
+      function updateHeaderOffsetVar() {
+        const headerHeight = header ? header.offsetHeight : 110;
+        document.documentElement.style.setProperty('--header-offset', (headerHeight + 12) + 'px');
+      }
+      updateHeaderOffsetVar();
+      window.addEventListener('resize', updateHeaderOffsetVar);
+      // also update after fonts/images load just in case header height changes
+      window.addEventListener('load', updateHeaderOffsetVar);
+
+      // When the page first loads, mark the current active link
+      function initActiveLinks() {
+        const hash = location.hash || '#details';
+        document.querySelectorAll('.sidebar a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+        document.querySelectorAll('#mobileNavContent a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === hash));
+      }
+      initActiveLinks();
 
     })();
   </script>
