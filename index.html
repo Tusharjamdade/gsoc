@@ -509,7 +509,7 @@
     .theme-toggle,
     .nav-toggle,
     #mobileNavClose {
-      border: 0.01px solid #547fb4;
+      border: 0.01px solid #1f3b4a;
       /* Tailwind 'blue-400' tone */
     }
   </style>
@@ -517,24 +517,24 @@
 
 <body>
   <header class="site-header" id="siteHeader">
+    <!-- moved hamburger here so on small screens it appears at the left (standard position) -->
+    <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+          stroke-linejoin="round"></path>
+      </svg>
+    </button>
+
     <div class="brand" id="brandButton">
       <img src="img/gsoc.png" alt="GSoC logo" class="logo-img">
       <div>
-        <h1>GSoC 2025 - AVRO File Analysis</h1>
+        <h1>GSoC 2025</h1>
         <p>@ Data For The Common Good</p>
       </div>
     </div>
 
     <div class="header-actions">
-      <!-- NAV (hamburger) toggle for small screens -->
-      <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false"
-        aria-controls="mobileNav">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-            stroke-linejoin="round"></path>
-        </svg>
-      </button>
-
+      <!-- keep theme-toggle on the right -->
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false">
         <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <!-- icon replaced by JS on load -->
@@ -694,7 +694,7 @@
           <img src="img/gsoc.png" alt=""
             style="width:36px;height:36px;border-radius:8px;border:1px solid var(--glass-border);">
           <div>
-            <div id="mobileNavTitle" style="font-weight:700;">GSoC 2025 - AVRO File Analysis</div>
+            <div id="mobileNavTitle" style="font-weight:700;">GSoC 2025</div>
             <div style="font-size:0.75rem;color:var(--muted);">@ Data For The Common Good</div>
             <!-- <h1>GSoC 2025 - AVRO File Analysis</h1>
            <p>@ Data For The Common Good</p> -->
