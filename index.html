@@ -512,13 +512,26 @@
       border: 0.01px solid #1f3b4a;
       /* Tailwind 'blue-400' tone */
     }
+
+    /* Light mode image borders (default theme) */
+    :root .doc-image {
+      border: 0.1px solid #000000;
+      /* black border */
+    }
+
+    /* Dark mode image borders */
+    [data-theme="dark"] .doc-image {
+      border: 0.1px solid #ffffff;
+      /* white border */
+    }
   </style>
 </head>
 
 <body>
   <header class="site-header" id="siteHeader">
     <!-- moved hamburger here so on small screens it appears at the left (standard position) -->
-    <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileNav">
+    <button class="nav-toggle" id="navToggle" aria-label="Open navigation" aria-expanded="false"
+      aria-controls="mobileNav">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
           stroke-linejoin="round"></path>
